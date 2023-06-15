@@ -36,12 +36,6 @@
         // "completed": false 
     }
     async function saveTodo(){
-        // const formData = new FormData();
-        // formData.append("userid", document.getElementById("userList").selectedOptions[0].value);
-        // formData.append("category", document.getElementById("categoryList").selectedOptions[0].value);
-        // formData.append("description", document.getElementById("description").value);
-        // formData.append("deadline", document.getElementById("deadline").value);
-        // formData.append("priority", document.getElementById("priority").selectedOptions[0].value);
         body = new URLSearchParams({
             "userid": document.getElementById("userList").selectedOptions[0].value,
             "category": document.getElementById("categoryList").selectedOptions[0].value,
