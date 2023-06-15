@@ -2,6 +2,14 @@
     <h1>
         Todo List
     </h1>
+    <nav>
+        <div>
+            <a href="todos.html">List Todos</a>
+        </div>
+        <div>
+            <a href="new_todo.html">New Todo</a>
+        </div>
+    </nav>
     <select id="userList">
         <option value="">
             Select a user to begin
@@ -13,12 +21,33 @@
     const userList = document.getElementById("userList");
     const todoList = document.getElementById("todoList");
     
+    const checkedEntity = "&#9989;";
+    const uncheckedEntity = "&#128997;";
+
+    function getCheckedEntity(booleanValue){
+        return booleanValue ? checkedEntity : uncheckedEntity;
+    }
+
+    function onClickCheck(button){
+        // alert(button.dataset.completed)
+        const opposite = !(button.dataset.completed === "true");
+        button.dataset.completed = opposite;
+        button.innerHTML = getCheckedEntity(opposite)
+        fetch("http://localhost:8083/api/todos/" + button.dataset.id, 
+        {
+            method:"PUT",
+            body: "completed=" + opposite
+        });//end fetch
+    }
+
     function displayTodoItemList(data){
         todoList.innerHTML = "";
         data.forEach(item => {
             todoList.innerHTML += `
                 <div>
-                    ${ item.completed ? "[X]" : "[&nbsp;]"}
+                    <button onclick="onClickCheck(this)" data-id="${item.id}" data-completed="${item.completed}">
+                        ${ getCheckedEntity(item.completed) }
+                    </button>
                     ${ item.description }
                 </div>
             `;
